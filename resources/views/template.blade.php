@@ -16,6 +16,9 @@
             <li class="nav-item active">
               <a class="nav-link" style="font-family: fantasy;" href="#">Clientes<span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item active">
+              <a class="nav-link" style="font-family: fantasy;" href="{{ route('logout') }}">Logout</a>
+            </li>
           </ul>
         </div>
       </nav>

@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Usuario;
 class UsuariosControler extends Controller
 {
+    
     function nomesUsuarios(){
-    	$lista = [];
-    	$usuarios = Usuario::all();
-
-    	
-    	return view("lista", ["usuarios"=> $usuarios]);
+        if(session()->has("login")){
+    	   $lista = [];
+    	   $usuarios = Usuario::all();
+    	   return view("lista", ["usuarios"=> $usuarios]);
+        }
     }
     function cadastro(){
     	return view("cadastro");
