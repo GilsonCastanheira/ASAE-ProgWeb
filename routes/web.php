@@ -34,8 +34,12 @@ Route::get('/usuarios/cadastro_vendas/{id}', 'VendaController@telaCadastroVendas
 Route::post('/usuarios/adicionar_venda/{id}', 'VendaController@adicionar')->name('venda_add');
 
 Route::get('/usuarios/listar_venda/{id}', 'VendaController@listar')->name('listar_venda');
+Route::get('/venda/{id}/itens', 'VendaController@itensVenda')->name('vendas_itens');
+Route::get('/venda/{id}/itens/novo', 'VendaController@telaAdicionarItem')->name('vendas_item_novo');
 
 Route::get('/cadastro', 'AppController@cadastro')->name('cadastro_usuario');
 Route::post('/user/adicionar', 'AppController@adicionar')->name('adicionar_usuario');
 
 Route::get('/logout', 'AppController@logout')->name('logout');
+
+Route::post('venda/{id}/itens/adicionar', 'VendaController@adicionarItem')->name('vendas_item_add');

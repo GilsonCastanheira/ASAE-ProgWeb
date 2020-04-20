@@ -9,6 +9,8 @@
         <th>ID</th> 
         <th>Descrição</th>
         <th>Valor</th>
+        <th>Data</th>
+        <th>Operações</th>
       </tr>
     </thead>
     <tbody>
@@ -17,9 +19,15 @@
         <td>{{ $v->id }}</td>
         <td>{{ $v->descricao }}</td>
         <td>{{ $v->valor}}</td>
+        <td>{{ $v->created_at}}</td>
+        <td><a class="btn btn-info" href="{{route('vendas_itens', ['id'=>$v -> id])}} ">Itens</a></td>
+
       </tr>
       @endForeach
     </tbody>
   </table>
   <a class="btn btn-primary" href="{{ route('nome_usuarios') }}">Mostrar Clientes</a>
+  
+
+  
 @endsection

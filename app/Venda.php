@@ -12,4 +12,8 @@ class Venda extends Model
     function usuario(){
         return $this->belongsTo('App\Usuario', 'id_usuario', 'id');
     }
+
+    function produtos(){
+    	return $this->belongsToMany('App\Produto', 'produtos_vendas', 'id_venda', 'id_produto')->withPivot(['id',    'quantidade', 'subtotal'])->withTimestamps();
+    }
 }
