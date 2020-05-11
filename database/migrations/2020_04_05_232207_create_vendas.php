@@ -15,9 +15,9 @@ class CreateVendas extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_usuario');
-            $table->string('descricao', 300);
             $table->double('valor', 8, 2);
+            $table->unsignedBigInteger('id_usuario');
+            
             $table->timestamps();
 
             $table->foreign('id_usuario')->references('id')->on('usuarios');

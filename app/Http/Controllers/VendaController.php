@@ -9,32 +9,34 @@ use App\Produto;
 
 class VendaController extends Controller
 {
-    function telaCadastroVendas($id){
-        $usuario = Usuario::find($id);
+    function telaCadastroVendas(){
+        $usuario = Usuario::all();
 
-        return view("venda_usuario", [ "u" => $usuario ]);
+        return view("venda_usuario", [ "usuario" => $usuario ]);
     }
 
-    function adicionar(Request $req, $id){
-        $descricao = $req->input('descricao');
-        $valor = $req->input('valor');
+    function adicionar(Request $req){
+
+        $id_usuario = $req->input('id_usuario');
+
         $venda = new Venda();
-        $venda->id_usuario = $id;
-        $venda->descricao = $descricao;
-        $venda->valor = $valor;
-        if ($venda->save()){
-            $msg = "O produto $descricao foi cadastrado";
-        }else{
-            $msg = "Erro no cadastramento";
-        }
-        return redirect()->route('vendas_item_novo',  ['id' => $venda->id]);
-        //return view("retorno_venda", [ "mensagem" => $msg ]);
-    }
-    function listar($id){
-        $vendas = Venda::all();
-        $usuarios = Usuario::find($id)->vendas;
+        $venda->valor = 0;
+        $venda->id_usuario = $id_usuario;
 
-        return view("lista_venda", [ "vendas" => $vendas ]);
+        if ($venda->save()){
+            $msg = "Venda adicionada com sucesso.";
+        } else {
+            $msg = "Venda não foi cadastrada.";
+        }
+
+        return redirect()->route('vendas_item_novo', ['id' => $venda->id]);
+    }
+
+    
+    function listar(){
+        $vendas = Venda::all();
+
+        return view('lista_venda_geral', ['vendas' => $vendas]);
     }
 
     function itensVenda($id){
@@ -56,16 +58,12 @@ class VendaController extends Controller
         $venda = Venda::find($id);
         $subtotal = $produto->preco * $quantidade;
 
-        $colunas_pivot = [
-            'quantidade' => $quantidade,
-            'subtotal' => $subtotal
-        ];
+        $colunas_pivot = ['quantidade' => $quantidade,'subtotal' => $subtotal];
         $venda->produtos()->attach($produto->id, $colunas_pivot);
         $venda->valor += $subtotal;
         $venda->save();
 
-        return redirect()->route('vendas_item_novo', 
-            ['id' => $venda->id]);
+        return redirect()->route('vendas_item_novo', ['id' => $venda->id]);
     }
 
     function excluirItem($id, $id_produto){
@@ -82,7 +80,6 @@ class VendaController extends Controller
         $venda->produtos()->detach($id_produto);
         $venda->save();
 
-        return redirect()->route('vendas_item_novo', 
-            ['id' => $id]);
+        return redirect()->route('vendas_item_novo', ['id' => $id]);
     }
 }

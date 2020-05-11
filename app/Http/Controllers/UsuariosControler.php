@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuario;
+use Auth;
 class UsuariosControler extends Controller
 {
     
@@ -77,5 +78,14 @@ class UsuariosControler extends Controller
             $msg = "Erro na exclusão";
         }
         return view("resultado", [ "msg" => $msg]);
+    }
+
+    function listar(){
+    
+        $usuarios = Usuario::all();
+
+        return view("lista", [ "us" => $usuarios ]);
+
+        
     }
 }
